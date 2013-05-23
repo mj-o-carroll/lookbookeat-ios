@@ -17,8 +17,8 @@
 @interface HomeViewController : UIViewController
 
 
-@property (strong, nonatomic) IBOutlet UILabel *testLabel;
 @property (strong, nonatomic) RestaurantsController * restaurantsController;
+@property (strong, nonatomic) IBOutlet UIImageView * logo;
 
 - (void)back;
 

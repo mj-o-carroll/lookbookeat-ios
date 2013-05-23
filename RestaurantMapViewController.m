@@ -32,7 +32,7 @@
     restaurantName = [selectedRestaurant valueForKey:@"name"];
     restaurantAddress = [selectedRestaurant valueForKey:@"address"];
     [self geocode: (@"%@, %@", restaurantName, restaurantAddress)];
-    //map.delegate = self;
+    
 }
 
 -(void)back
@@ -42,7 +42,7 @@
 
 -(void)viewDidUnload
 {
-    //[manager stopUpdatingLocation];
+    
     
 }
 
@@ -57,13 +57,11 @@
              CLPlacemark*mark = (CLPlacemark*) [placemarks objectAtIndex:0];
              double lat = mark.location.coordinate.latitude;
              double lng = mark.location.coordinate.longitude;
-             //5 show the coords text
-             //locationLabel.text = [NSString stringWithFormat:@"Coordinate\nlat: %@, long: %@",
-                                   //[NSNumber numberWithDouble: lat],[NSNumber numberWithDouble: lng]];
+             
              //show on the map
-             //1
+            
              CLLocationCoordinate2D coordinate; coordinate.latitude = lat; coordinate.longitude = lng;
-             //2
+        
              point = [[MKPointAnnotation alloc] init];
              point.coordinate = coordinate;
              point.title = restaurantName;
@@ -71,10 +69,6 @@
              
              [map addAnnotation:point];
             
-             
-             
-             //[map addAnnotation:[[RestaurantAnnotation alloc] initWithCoordinate:coordinate]];
-             //3
              MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(coordinate, 500, 500);
              MKCoordinateRegion adjustedRegion = [map regionThatFits:viewRegion]; [map setRegion:adjustedRegion animated:YES
                                                                                    ];
@@ -86,5 +80,20 @@
     
             }
 
+
+- (void) viewDidAppear:(BOOL)animated
+{
+    //set up swipe gesture to previous view
+    UISwipeGestureRecognizer *oneFingerSwipeRight = [[UISwipeGestureRecognizer alloc]
+                                                     initWithTarget:self
+                                                     action:@selector(oneFingerSwipeRight:)];
+    [oneFingerSwipeRight setDirection:UISwipeGestureRecognizerDirectionRight];
+    [[self view] addGestureRecognizer:oneFingerSwipeRight];
+}
+
+//pop view from stack to return to previous view
+- (void)oneFingerSwipeRight:(UITapGestureRecognizer *)recognizer {
+    [[self navigationController] popViewControllerAnimated:YES];
+}
 
 @end

@@ -11,7 +11,7 @@
 
 @implementation AddCommentsViewController
 
-@synthesize delegate, commentText, fiveStar, fourStar, twoStar, threeStar, oneStar;
+@synthesize delegate, commentText, fiveStar, fourStar, twoStar, threeStar, oneStar, commentRating;
 
 
 
@@ -24,23 +24,94 @@
     self.view.backgroundColor = [UIColor colorWithPatternImage:patternImage];
     
     [fiveStar addTarget:self action:@selector(starSelected:) forControlEvents:UIControlEventTouchUpInside];
+    [fourStar addTarget:self action:@selector(starSelected:) forControlEvents:UIControlEventTouchUpInside];
+    [threeStar addTarget:self action:@selector(starSelected:) forControlEvents:UIControlEventTouchUpInside];
+    [twoStar addTarget:self action:@selector(starSelected:) forControlEvents:UIControlEventTouchUpInside];
+    [oneStar addTarget:self action:@selector(starSelected:) forControlEvents:UIControlEventTouchUpInside];
     
-    //    UITapGestureRecognizer *tapgesture=[[UITapGestureRecognizer alloc]initWithTarget:self
-    //                                                                              action:@selector(tableClicked)];
-    //    [tableView addGestureRecognizer:tapgesture];
+    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+    [self.view addGestureRecognizer:gestureRecognizer];
+    gestureRecognizer.cancelsTouchesInView = NO;  // this prevents the gesture recognizers to 'block' touches
+
+}
+
+- (void) viewDidAppear:(BOOL)animated
+{
+    //set up swipe gesture to previous view
+    UISwipeGestureRecognizer *oneFingerSwipeRight = [[UISwipeGestureRecognizer alloc]
+                                                     initWithTarget:self
+                                                     action:@selector(oneFingerSwipeRight:)];
+    [oneFingerSwipeRight setDirection:UISwipeGestureRecognizerDirectionRight];
+    [[self view] addGestureRecognizer:oneFingerSwipeRight];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+    [self.view addGestureRecognizer:gestureRecognizer];
+    gestureRecognizer.cancelsTouchesInView = NO;  // this prevents the gesture recognizers to 'block' touches
+
+}
+
+
+- (void)hideKeyboard
+{
+    [commentText resignFirstResponder];
+}
+
+
+//pop view from stack to return to previous view
+- (void)oneFingerSwipeRight:(UITapGestureRecognizer *)recognizer {
+    [[self navigationController] popViewControllerAnimated:YES];
 }
 
 - (void)starSelected:(id)sender
 {
-    if (fiveStar)
+    if ([sender tag] == 5)
     {
-        [fiveStar setImage:[UIImage imageNamed:@"test@2x.png"] forState:UIControlStateNormal];
+        [fiveStar setImage:[UIImage imageNamed:@"1Star@2x.png"] forState:UIControlStateNormal];
+        [fourStar setImage:[UIImage imageNamed:@"1Star@2x.png"] forState:UIControlStateNormal];
+        [threeStar setImage:[UIImage imageNamed:@"1Star@2x.png"] forState:UIControlStateNormal];
+        [twoStar setImage:[UIImage imageNamed:@"1Star@2x.png"] forState:UIControlStateNormal];
+        [oneStar setImage:[UIImage imageNamed:@"1Star@2x.png"] forState:UIControlStateNormal];
+        commentRating = @"5";
+    }
+    
+    else if ([sender tag] == 4)
+    {
+        [fiveStar setImage:[UIImage imageNamed:@"whiteStar.png"] forState:UIControlStateNormal];
+        [fourStar setImage:[UIImage imageNamed:@"1Star@2x.png"] forState:UIControlStateNormal];
+        [threeStar setImage:[UIImage imageNamed:@"1Star@2x.png"] forState:UIControlStateNormal];
+        [twoStar setImage:[UIImage imageNamed:@"1Star@2x.png"] forState:UIControlStateNormal];
+        [oneStar setImage:[UIImage imageNamed:@"1Star@2x.png"] forState:UIControlStateNormal];
+        commentRating = @"4";
+    }
+    
+    else if ([sender tag] == 3)
+    {
+        [fiveStar setImage:[UIImage imageNamed:@"whiteStar.png"] forState:UIControlStateNormal];
+        [fourStar setImage:[UIImage imageNamed:@"whiteStar.png"] forState:UIControlStateNormal];
+        [threeStar setImage:[UIImage imageNamed:@"1Star@2x.png"] forState:UIControlStateNormal];
+        [twoStar setImage:[UIImage imageNamed:@"1Star@2x.png"] forState:UIControlStateNormal];
+        [oneStar setImage:[UIImage imageNamed:@"1Star@2x.png"] forState:UIControlStateNormal];
+        commentRating = @"3";
+    }
+    
+    else if ([sender tag] == 2)
+    {
+        [fiveStar setImage:[UIImage imageNamed:@"whiteStar.png"] forState:UIControlStateNormal];
+        [fourStar setImage:[UIImage imageNamed:@"whiteStar.png"] forState:UIControlStateNormal];
+        [threeStar setImage:[UIImage imageNamed:@"whiteStar.png"] forState:UIControlStateNormal];
+        [twoStar setImage:[UIImage imageNamed:@"1Star@2x.png"] forState:UIControlStateNormal];
+        [oneStar setImage:[UIImage imageNamed:@"1Star@2x.png"] forState:UIControlStateNormal];
+        commentRating = @"2";
+    }
+    
+    else if ([sender tag] == 1)
+    {
+        [fiveStar setImage:[UIImage imageNamed:@"whiteStar.png"] forState:UIControlStateNormal];
+        [fourStar setImage:[UIImage imageNamed:@"whiteStar.png"] forState:UIControlStateNormal];
+        [threeStar setImage:[UIImage imageNamed:@"whiteStar.png"] forState:UIControlStateNormal];
+        [twoStar setImage:[UIImage imageNamed:@"whiteStar.png"] forState:UIControlStateNormal];
+        [oneStar setImage:[UIImage imageNamed:@"1Star@2x.png"] forState:UIControlStateNormal];
+        commentRating = @"1";
     }
 }
 

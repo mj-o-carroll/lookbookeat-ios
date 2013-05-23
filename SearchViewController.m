@@ -30,10 +30,11 @@
 {
     [super viewDidLoad];
     
+    [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setFont:[UIFont fontWithName:@"Avenir" size:15.0]];
+    
     // tap recognition for first responder
     UITapGestureRecognizer *tapgesture=[[UITapGestureRecognizer alloc]initWithTarget:self
                                                                               action:@selector(tableClicked)];
-    //[tableView addGestureRecognizer:tapgesture];
     
     
     // set background image
@@ -56,13 +57,10 @@
     parameters = [NSMutableArray arrayWithObjects:
              @"By county", @"Food type", @"Price", @"By rating", @"Dietary requirements", @"See all", nil];
     
-    
+    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+    [self.view addGestureRecognizer:gestureRecognizer];
+    gestureRecognizer.cancelsTouchesInView = NO;  // this prevents the gesture recognizers to 'block' touches
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 //  removes view controller once screen is tapped outside keyboard
@@ -71,14 +69,41 @@
     [searchBar resignFirstResponder];
 }
 
--(void)viewDidAppear:(BOOL)animated
+
+- (void) viewDidAppear:(BOOL)animated
 {
     [self searchBar].delegate=self;
     [self searchBar].text=@"";
     [self.tableView reloadData];
     [self.navigationController setToolbarHidden:NO];
+    [[UITableViewCell appearance] setFont:[UIFont fontWithName:@"Avenir" size:17.0]];
+    [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setFont:[UIFont fontWithName:@"Avenir" size:15.0]];
+    
+    //set up swipe gesture to previous view
+    UISwipeGestureRecognizer *oneFingerSwipeRight = [[UISwipeGestureRecognizer alloc]
+                                                     initWithTarget:self
+                                                     action:@selector(oneFingerSwipeRight:)];
+    [oneFingerSwipeRight setDirection:UISwipeGestureRecognizerDirectionRight];
+    [[self view] addGestureRecognizer:oneFingerSwipeRight];
+    
+    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+    [self.view addGestureRecognizer:gestureRecognizer];
+    gestureRecognizer.cancelsTouchesInView = NO;  // this prevents the gesture recognizers to 'block' touches
     
 }
+
+- (void)hideKeyboard
+{
+    [searchBar resignFirstResponder];
+}
+
+//pop view from stack to return to previous view
+- (void)oneFingerSwipeRight:(UITapGestureRecognizer *)recognizer
+{
+    [[self navigationController] popViewControllerAnimated:YES];
+}
+
+
 
 -(IBAction)refreshParameters
 {
@@ -128,8 +153,7 @@
     }
     searchBarResults = [restaurantsController.listOfRestaurants filteredArrayUsingPredicate:searchBarPred];
     [self performSegueWithIdentifier:@"SearchBarResults" sender:self];
-    //[self searchBar].text=@"";
-    [self.tableView resignFirstResponder];
+    [self resignFirstResponder];
     [self.view endEditing:YES];
 }
 
@@ -229,7 +253,6 @@
    
     NSPredicate *pred = [NSCompoundPredicate andPredicateWithSubpredicates:[NSArray arrayWithObjects:p1, p2, p3, p4, p5, nil]];
     filteredResults = [restaurantsController.listOfRestaurants filteredArrayUsingPredicate:pred];
-    NSLog(@"Array: %@", filteredResults);
 }
 
 
@@ -333,46 +356,6 @@
     
 
 }
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-#pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -405,7 +388,6 @@
     }
 }
 
-#pragma mark - ByCountyViewControllerDelegate
 
 - (void)byCountyViewController:
 (ByCountyViewController *)controller
@@ -461,8 +443,5 @@
 	[self.navigationController popViewControllerAnimated:YES];
     
 }
-
-
-
 
 @end

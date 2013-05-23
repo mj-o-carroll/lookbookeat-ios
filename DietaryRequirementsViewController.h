@@ -19,8 +19,6 @@
 (DietaryRequirementsViewController *)controller
                didSelectDietaryRequirement:(NSString *)dietaryRequirement;
 
-
-
 @end
 
 @interface DietaryRequirementsViewController : UITableViewController

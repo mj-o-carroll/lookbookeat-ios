@@ -42,5 +42,6 @@
 - (void)searchResults;
 - (void)back;
 -(IBAction)refreshParameters;
+- (void)hideKeyboard;
 
 @end

@@ -10,13 +10,14 @@
 //#import "Restaurant.h"
 #import "RestaurantMapViewController.h"
 
-@interface ProfileViewController : UIViewController<UITabBarDelegate>
+@interface ProfileViewController : UIViewController<UIScrollViewDelegate>
 
 
-//@property (strong, nonatomic) Restaurant *restaurant;
+@property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) NSMutableDictionary *selectedRestaurant;
 @property (strong, nonatomic) IBOutlet UILabel * restaurantAddress;
-@property (strong, nonatomic) IBOutlet UILabel * restaurantPhoneNo;
+@property (strong, nonatomic) IBOutlet UILabel * priceRange;
+@property (strong, nonatomic) IBOutlet UITextView * restaurantPhoneNo;
 @property (strong, nonatomic) IBOutlet UITextView * restaurantDescription;
 @property (strong, nonatomic) IBOutlet UIImageView * restaurantPic;
 @property (strong, nonatomic) IBOutlet UIImageView * restaurantRating;

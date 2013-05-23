@@ -34,7 +34,7 @@
     // set background image
     UIImage *patternImage = [UIImage imageNamed:@"light_toast.png"];
     self.view.backgroundColor = [UIColor colorWithPatternImage:patternImage];
-    
+    [[UIButton appearance] setFont:[UIFont fontWithName:@"Avenir" size:17.0]];
     //set custom back button
     UIImage *buttonImage = [UIImage imageNamed:@"back_button.png"];
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -46,6 +46,23 @@
     
 	// Do any additional setup after loading the view.
 }
+
+- (void) viewDidAppear:(BOOL)animated
+{
+    [[UIButton appearance] setFont:[UIFont fontWithName:@"Avenir" size:17.0]];
+    //set up swipe gesture to previous view
+    UISwipeGestureRecognizer *oneFingerSwipeRight = [[UISwipeGestureRecognizer alloc]
+                                                     initWithTarget:self
+                                                     action:@selector(oneFingerSwipeRight:)];
+    [oneFingerSwipeRight setDirection:UISwipeGestureRecognizerDirectionRight];
+    [[self view] addGestureRecognizer:oneFingerSwipeRight];
+}
+
+//pop view from stack to return to previous view
+- (void)oneFingerSwipeRight:(UITapGestureRecognizer *)recognizer {
+    [[self navigationController] popViewControllerAnimated:YES];
+}
+
 
 -(void)back
 {
@@ -59,11 +76,9 @@
     [formatter setTimeZone:[NSTimeZone timeZoneWithName:@"..."]];
     timeDate = [formatter stringFromDate:sender.date];
     NSLog(@"Chosen date: %@", timeDate);
-    selectedTimeDate.text = timeDate;
+    selectedTimeDate.text = [NSString stringWithFormat:@"Your chosen time & date - %@.", timeDate];
 }
 - (void)chosenSeat:(UIPickerView *)sender {
-    //NSLog(@"Chosen date: %@", sender.date);
-    //selectedNoSeats.text = ;
 }
 
 - (void)removeViews:(id)object {
@@ -140,7 +155,6 @@
     seatPicker.tag = 10;
     seatPicker.delegate = self;
     seatPicker.showsSelectionIndicator = YES;
-    //[seatPicker addTarget:self action:@selector(chosenSeat:) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:seatPicker];
     
     UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 44)];
@@ -163,6 +177,8 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow: (NSInteger)row inComponent:(NSInteger)component {
     // Handle the selection
     NSLog(@"Selected no of seats: %d", [seatPicker selectedRowInComponent:0]);
+    noOfSeats = [NSString stringWithFormat:@"%d", [seatPicker selectedRowInComponent:0]];
+    selectedNoSeats.text = [NSString stringWithFormat:@"You wish to book %@ seats.", noOfSeats];
 }
 
 // tell the picker how many rows are available for a given component
@@ -181,7 +197,6 @@
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
     NSString *title;
     title = [@"     No of seats                    " stringByAppendingFormat:@"%d",row];
-    
     return title;
 }
 
@@ -198,22 +213,18 @@
     {
         MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
         mailer.mailComposeDelegate = self;
-        [mailer setSubject:@"A LookBookEat Booking from This User"];
+        [mailer setSubject:@"A LookBookEat Booking"];
         NSArray *toRecipients = [NSArray arrayWithObjects:[selectedRestaurant valueForKey:@"email"], nil];
         [mailer setToRecipients:toRecipients];
-        //UIImage *myImage = [UIImage imageNamed:@"mobiletuts-logo.png"];
-        //NSData *imageData = UIImagePNGRepresentation(myImage);
-        //[mailer addAttachmentData:imageData mimeType:@"image/png" fileName:@"mobiletutsImage"];
-        NSString *emailBody = [[NSString alloc] initWithFormat:@"Hi I'd like to book a table for x on %@", timeDate];
+        NSString *emailBody = [[NSString alloc] initWithFormat:@"Hi, I'd like to book a table for %@ on %@.", noOfSeats, timeDate];
         [mailer setMessageBody:emailBody isHTML:NO];
-        //[self presentViewController:mailer animated:YES];
         [self presentViewController:mailer animated:YES completion:NULL];
      }
     else
     {
         //change this message...
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Failure"
-                                                        message:@"Your device doesn't support the composer sheet"
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"There was a problem"
+                                                        message:@"The booking cannot be sent on this device"
                                                        delegate:nil
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
@@ -251,36 +262,6 @@
 }
 
 
-
-//- (IBAction)callDP:(id)sender {
-//
-//    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Pick a date and time!" delegate:nil cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
-//    
-//    [actionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
-//    
-//    CGRect pickerFrame = CGRectMake(0, 40, 0, 0);
-//    
-//    UIDatePicker* datePickerView = [[UIDatePicker alloc] initWithFrame:pickerFrame];
-//    datePickerView.tag = 10;
-//    [datePickerView addTarget:self action:@selector(changeDate:) forControlEvents:UIControlEventValueChanged];
-//    
-//    [actionSheet addSubview:datePickerView];
-//    
-//    UISegmentedControl *closeButton = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:@"Close"]];
-//    closeButton.momentary = YES;
-//    closeButton.frame = CGRectMake(260, 7.0f, 50.0f, 30.0f);
-//    closeButton.segmentedControlStyle = UISegmentedControlStyleBar;
-//    closeButton.tintColor = [UIColor blackColor];
-//    [closeButton addTarget:self action:@selector(dismissActionSheet:) forControlEvents:UIControlEventValueChanged];
-//    [actionSheet addSubview:closeButton];
-//    
-//    
-//    
-//    //[actionSheet showInView:self.view];
-//    [actionSheet showInView:[UIApplication sharedApplication].keyWindow];
-//    
-//    [actionSheet setBounds:CGRectMake(0, 0, 320, 485)];
-//}
 
 - (void)didReceiveMemoryWarning
 {

@@ -10,6 +10,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "NearbyAnnotation.h"
 #import "ProfileViewController.h"
+#import "MapPin.h"
 
 @interface NearbyViewController()
 -(void)revGeocode:(CLLocation*)c;
@@ -18,13 +19,15 @@
 
 @implementation NearbyViewController
 
-@synthesize restaurantsController, mapView;
+@synthesize restaurantsController, mapView, map, selectedRestaurant;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.mapView.delegate = self;
+    NSLog(@"the comment at this index is: %@", [restaurantsController listOfRestaurants]);
+
+    //mapView.delegate = self;
+    map.delegate = self;
     //set custom back button
     UIImage *buttonImage = [UIImage imageNamed:@"back_button.png"];
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -39,6 +42,21 @@
     [manager startUpdatingLocation];
     [self setUpRestaurantPins];
     
+}
+
+- (void) viewDidAppear:(BOOL)animated
+{
+    //set up swipe gesture to previous view
+    UISwipeGestureRecognizer *oneFingerSwipeRight = [[UISwipeGestureRecognizer alloc]
+                                                     initWithTarget:self
+                                                     action:@selector(oneFingerSwipeRight:)];
+    [oneFingerSwipeRight setDirection:UISwipeGestureRecognizerDirectionRight];
+    [[self view] addGestureRecognizer:oneFingerSwipeRight];
+}
+
+//pop view from stack to return to previous view
+- (void)oneFingerSwipeRight:(UITapGestureRecognizer *)recognizer {
+    [[self navigationController] popViewControllerAnimated:YES];
 }
 
 -(void)back
@@ -61,134 +79,76 @@
     [manager stopUpdatingLocation];
 }
 
-//- (void)locationManager:
-//(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
-//{
-//    if (newLocation.coordinate.latitude !=
-//        oldLocation.coordinate.latitude) {
-//        [self revGeocode: newLocation]; }
-//}
-//
-//-(void)revGeocode:(CLLocation*)c
-//{
-//    addressLabel.text = @"reverse geocoding coordinate ...";
-//    CLGeocoder* gcrev = [[CLGeocoder alloc] init];
-//    [gcrev reverseGeocodeLocation:c completionHandler:^(NSArray *placemarks, NSError *error){CLPlacemark* revMark = [placemarks objectAtIndex:0];
-//        //turn placemark to address text
-//        NSArray* addressLines =
-//        [revMark.addressDictionary objectForKey:@"FormattedAddressLines"];
-//        NSString* revAddress =
-//        [addressLines componentsJoinedByString: @"\n"];
-//        addressLabel.text = [NSString stringWithFormat: @"Reverse geocoded address: \n%@", revAddress];
-//        //now turn the address to coordinates
-//        [self geocode: revAddress];
-//    }];
-//}
-//
-//-(void)geocode:(NSString*)address
-//{
-//    //1
-//    locationLabel.text = @"geocoding address...";
-//    CLGeocoder*gc = [[CLGeocoder alloc] init];
-//    //2
-//    [gc geocodeAddressString:address completionHandler:
-//     ^(NSArray *placemarks, NSError *error)
-//     {
-//         //3
-//         if ([placemarks count]>0)
-//         {
-//             //4
-//             CLPlacemark*mark = (CLPlacemark*) [placemarks objectAtIndex:0];
-//             double lat = mark.location.coordinate.latitude;
-//             double lng = mark.location.coordinate.longitude;
-//             //5 show the coords text
-//             locationLabel.text = [NSString stringWithFormat:@"Coordinate\nlat: %@, long: %@",
-//                                   [NSNumber numberWithDouble: lat],[NSNumber numberWithDouble: lng]];
-//             //show on the map
-//             //1
-//             CLLocationCoordinate2D coordinate; coordinate.latitude = lat; coordinate.longitude = lng;
-//             //2
-//             [map addAnnotation:[[NearbyAnnotation alloc] initWithCoordinate:coordinate]];
-//             //3
-//             MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(coordinate, 100000, 100000);
-//             MKCoordinateRegion adjustedRegion = [map regionThatFits:viewRegion]; [map setRegion:adjustedRegion animated:YES];
-//         }}];
-//}
 
 -(void)geocodeRestaurant:(NSString *)address :(NSString *)name
 {
     map.showsUserLocation = YES;
-    //1
-    //locationLabel.text = @"geocoding address...";
     CLGeocoder*gc = [[CLGeocoder alloc] init];
-    //2
     [gc geocodeAddressString:address completionHandler:
      ^(NSArray *placemarks, NSError *error)
      {
-         //3
          if ([placemarks count]>0)
          {
-             //4
              CLPlacemark*mark = (CLPlacemark*) [placemarks objectAtIndex:0];
              double lat = mark.location.coordinate.latitude;
              double lng = mark.location.coordinate.longitude;
-             //5 show the coords text
-             //locationLabel.text = [NSString stringWithFormat:@"Coordinate\nlat: %@, long: %@",
-                                   //[NSNumber numberWithDouble: lat],[NSNumber numberWithDouble: lng]];
-             //show on the map
-             //1
-             CLLocationCoordinate2D coordinate; coordinate.latitude = lat; coordinate.longitude = lng;
-             //2
-             MKPointAnnotation *point = [[MKPointAnnotation alloc] init];
-             NSString * pinName = name;
-             NSLog(@"PinName: %@", pinName);
-             NSLog(@"Name: %@", name);
-             NSString * pinAddress = address;
-             point.coordinate = coordinate;
-             point.title = pinName;
-             point.subtitle = pinAddress;
-             
-             [map addAnnotation:point];
-             
-             //[map addAnnotation:[[NearbyAnnotation alloc] initWithCoordinate:coordinate]];
-             //3
+             CLLocationCoordinate2D coordinate;
+             coordinate.latitude = lat;
+             coordinate.longitude = lng;
+             MapPin *pin = [[MapPin alloc] initWithCoordinates:coordinate placeName:name description:address];
+             [map viewForAnnotation:pin];
+             [map addAnnotation:pin];
              MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(coordinate, 100000, 100000);
              MKCoordinateRegion adjustedRegion = [map regionThatFits:viewRegion]; [map setRegion:adjustedRegion animated:YES];
          }}];
 }
 
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
-    
-    
-    MKAnnotationView *annotationView = [mapView dequeueReusableAnnotationViewWithIdentifier:@"String"];
-    if(!annotationView) {
-        annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"String"];
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
+    MKAnnotationView *annotationView = [mapView dequeueReusableAnnotationViewWithIdentifier:@"MapVC"];
+    if (!annotationView) {
+        annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"MapVC"];
+        annotationView.canShowCallout = YES;
         annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+    } else {
+        annotationView.annotation = annotation;
+        [(UIImageView *)annotationView.leftCalloutAccessoryView setImage:nil];
     }
-    
-    annotationView.enabled = YES;
-    annotationView.canShowCallout = YES;
     
     return annotationView;
 }
 
 
-//- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
-//
-//{
-//    // Go to edit view
-//    [self performSegueWithIdentifier:@"ToProfile" sender:self];
-//}
-//
-//- (void)performSegueWithIdentifier:(NSString *)identifier sender:(id)sender
-//{
-//    if([segue.identifier isEqualToString:@"ToProfile"])
-//    {
-//        
-//        ProfileViewController * profileViewController = [segue destinationViewController];
-//        profileViewController.selectedRestaurant = selectedRestaurant;
-//		
-//    }
-//}
+
+- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
+
+{
+    MapPin *temp = (MapPin*)view.annotation;
+    NSLog(@"Name: %@", temp.title);
+    
+    for(int i=0; i<[[restaurantsController listOfRestaurants] count]; i++)
+    {
+        if([[[restaurantsController listOfRestaurants] valueForKey:@"name"] objectAtIndex:i] == temp.title)
+     selectedRestaurant = [NSDictionary dictionaryWithDictionary:[[restaurantsController listOfRestaurants] objectAtIndex:i]];
+    }
+
+    [self performSegueWithIdentifier:@"ToRestaurant" sender:self];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    //remove default text from back button
+    self.navigationItem.backBarButtonItem  = [[UIBarButtonItem alloc] initWithTitle:@" " style:UIBarButtonItemStyleBordered target:nil action: nil];
+    
+    if([segue.identifier isEqualToString:@"ToRestaurant"])
+    {
+        
+        
+        ProfileViewController * profileViewController = [segue destinationViewController];
+        profileViewController.selectedRestaurant = selectedRestaurant;
+		
+    }
+    
+}
+
 
 @end

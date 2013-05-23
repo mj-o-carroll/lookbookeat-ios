@@ -10,6 +10,7 @@
 #import <Social/Social.h>
 #import "RestaurantMapViewController.h"
 #import "MenusViewController.h"
+#import "MenuOptionsViewController.h"
 #import "CommentsViewController.h"
 #import "BookingViewController.h"
 #import <SDWebImage/UIImageView+WebCache.h>
@@ -21,7 +22,7 @@
 
 @implementation ProfileViewController
 
-@synthesize selectedRestaurant, restaurantAddress, restaurantPhoneNo, restaurantPic, restaurantDescription, veganFriendly, vegetarianFriendly, coeliacFriendly;
+@synthesize selectedRestaurant, scrollView, restaurantAddress, priceRange, restaurantPhoneNo, restaurantPic, restaurantDescription, veganFriendly, vegetarianFriendly, coeliacFriendly;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -36,18 +37,19 @@
 {
     [super viewDidLoad];
     
+    
+    
+    //---set the viewable frame of the scroll view---
+    scrollView.frame = CGRectMake(0, 0, 320, 460);
+    
     // set title of restaurant
     self.navigationItem.title = [[selectedRestaurant valueForKey:@"name"] uppercaseString];
     
     // set background of textview
     restaurantDescription.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed: @"light_toast.png"]];
     
-    [[UILabel appearance] setFont:[UIFont fontWithName:@"Avenir" size:13.0]];
-    
-    // load pic from server
-    NSString* baseURL = [[NSString alloc] initWithFormat:@"http://www.lookbookeat.com/images/"];
-    NSString* picURL = [[NSString alloc] initWithFormat:@"%@%@", baseURL, [selectedRestaurant valueForKey:@"picture"]];
-    [restaurantPic setImageWithURL:[NSURL URLWithString:picURL] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
+    [[UILabel appearance] setFont:[UIFont fontWithName:@"Avenir" size:14.0]];
+    [restaurantPic setImage:[UIImage imageNamed:[selectedRestaurant valueForKey:@"picture"]]];
     
     // set background image
     UIImage *patternImage = [UIImage imageNamed:@"light_toast.png"];
@@ -61,17 +63,39 @@
     [button addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *customBarItem = [[UIBarButtonItem alloc] initWithCustomView:button];
     self.navigationItem.leftBarButtonItem = customBarItem;
-    
-	// Do any additional setup after loading the view.
-    //restaurant = [restaurant initWithContentsOfDictionary:selectedRestaurant];
-    //NSLog(@"%@", restaurant);
-    //restaurantName.text = [selectedRestaurant valueForKey:@"name"];
+
     restaurantAddress.text = [selectedRestaurant valueForKey:@"address"];
     restaurantPhoneNo.text = [selectedRestaurant valueForKey:@"phone_no"];
+    priceRange.text = [[NSString alloc] initWithFormat:@"Price Range %@",[selectedRestaurant valueForKey:@"price_range"]];
+
     restaurantDescription.text = [selectedRestaurant valueForKey:@"description"];
     _restaurantRating.image = [self imageForRating:[[selectedRestaurant valueForKey:@"rating"] intValue]];
     [self setDietaryRequirements];
     NSLog(@"%@", selectedRestaurant);
+}
+
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [[UILabel appearance] setFont:[UIFont fontWithName:@"Avenir" size:14.0]];
+    
+    //---set the content size of the scroll view---
+    [self.scrollView setContentSize:CGSizeMake(320, 700)];
+    
+    //set up swipe gesture to previous view
+    UISwipeGestureRecognizer *oneFingerSwipeRight = [[UISwipeGestureRecognizer alloc]
+                                                     initWithTarget:self
+                                                     action:@selector(oneFingerSwipeRight:)];
+    [oneFingerSwipeRight setDirection:UISwipeGestureRecognizerDirectionRight];
+    [[self view] addGestureRecognizer:oneFingerSwipeRight];
+
+    
+    
+}
+
+//pop view from stack to return to previous view
+- (void)oneFingerSwipeRight:(UITapGestureRecognizer *)recognizer {
+    [[self navigationController] popViewControllerAnimated:YES];
 }
 
 
@@ -105,25 +129,29 @@
         BookingViewController * bookingViewController = [segue destinationViewController];
         bookingViewController.selectedRestaurant = selectedRestaurant;
     }
+    else if([segue.identifier isEqualToString:@"ToMenus"])
+    {
+        MenuOptionsViewController * menuOptionsViewController = [segue destinationViewController];
+        menuOptionsViewController.selectedRestaurant = selectedRestaurant;
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+        
+    }
 }
 
 -(void)setDietaryRequirements
 {
     
     NSString *vegValue = [NSString stringWithFormat:@"%@", [selectedRestaurant valueForKey:@"veg_friendly"]];
-    NSLog(@"VEGGIE VALUE: - - - -%@", vegValue);
     if ([vegValue isEqual: @"1"])
     {
         [vegetarianFriendly setImage:[UIImage imageNamed:@"veggie.png"]];
     }
     NSString *veganValue = [NSString stringWithFormat:@"%@", [selectedRestaurant valueForKey:@"vegan_friendly"]];
-    NSLog(@"VEGGIE VALUE: - - - -%@", veganValue);
     if ([veganValue isEqual: @"1"])
     {
         [veganFriendly setImage:[UIImage imageNamed:@"vegan.png"]];
     }
     NSString *coeliacValue = [NSString stringWithFormat:@"%@", [selectedRestaurant valueForKey:@"coeliac_friendly"]];
-    NSLog(@"VEGGIE VALUE: - - - -%@", coeliacValue);
     if ([coeliacValue isEqual: @"1"])
     {
         [coeliacFriendly setImage:[UIImage imageNamed:@"coeliac_friendly.png"]];
@@ -148,8 +176,6 @@
 - (IBAction)shareTapped:(id)sender
     {
         NSString *message = [[NSString alloc] initWithFormat:@"I'm at %@ and really enjoying the food and company! Find them on the LookBookEat iOS app or www.lookbookeat.com", [selectedRestaurant valueForKey:@"name"]];
-        //add resturant image here
-        //UIImage *imageToShare = [UIImage imageNamed:@"test.jpg"];
         
         NSArray *postItems = @[message];
         
@@ -158,21 +184,6 @@
                                                 applicationActivities:nil];
         
         [self presentViewController:activityVC animated:YES completion:nil];
-//    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
-//    {
-//        SLComposeViewController *tweetSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
-//        [tweetSheet setInitialText:@"I'm using LookBookEat!"];
-//        [self presentViewController:tweetSheet animated:YES completion:nil];
-//    }
-//    else
-//    {
-//        UIAlertView *alertView = [[UIAlertView alloc]
-//                                  initWithTitle:@"Sorry" message:@"You can't send a tweet right now, make sure you have a network connection and a Twitter account created!"
-//                                  delegate:self
-//                                  cancelButtonTitle:@"OK"
-//                                  otherButtonTitles:nil];
-//        [alertView show];
-//    }
 }
 
 

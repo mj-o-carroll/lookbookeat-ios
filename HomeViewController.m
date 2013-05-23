@@ -15,7 +15,7 @@
 
 @implementation HomeViewController
 
-@synthesize testLabel, restaurantsController;
+@synthesize restaurantsController, logo;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -32,6 +32,8 @@
 {
     [super viewDidLoad];
     
+    [logo setImage:[UIImage imageNamed:@"logo.png"]];
+    
     [[UILabel appearance] setFont:[UIFont fontWithName:@"Avenir" size:17.0]];
     
     // set background image
@@ -40,8 +42,6 @@
     
     NSLog(@"Testing first view");
     NSLog(@"%@", [restaurantsController.listOfRestaurants objectAtIndex:0]);
-    NSString *myString = [restaurantsController.listOfRestaurants objectAtIndex:0];
-    [testLabel setText:myString];
     
     //NSNotification test code 
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -62,9 +62,14 @@
         NSLog(@"Reloaded the JSON!");
         NSLog(@"Kablam, here comes the refreshed restaurant controller!");
         NSLog(@"%@", [restaurantsController.listOfRestaurants objectAtIndex:0]);
-        [testLabel setText:@"JSON LOADED!"];
+        
         
     }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [[self navigationController] setToolbarHidden:YES];
+    [[UILabel appearance] setFont:[UIFont fontWithName:@"Avenir" size:17.0]];
 }
 
 - (void)didReceiveMemoryWarning

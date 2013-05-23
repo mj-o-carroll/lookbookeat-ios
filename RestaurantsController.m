@@ -52,7 +52,6 @@
 
 -(NSMutableArray*)ratings{
 
-    //NSSet * uniqueRatings = [NSSet setWithArray:[self valueForKey:@"rating"]];
     NSMutableArray * availableRatings = [[NSMutableArray alloc] initWithObjects:@"5 Star", @"4 Star", @"3 Star", @"2 Star", @"1 Star", nil];;
     return availableRatings;
 };

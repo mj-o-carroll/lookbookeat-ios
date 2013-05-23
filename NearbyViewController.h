@@ -12,15 +12,13 @@
 
 @interface NearbyViewController : UIViewController<CLLocationManagerDelegate, MKMapViewDelegate>
 {
-    IBOutlet MKMapView* map;
-//    IBOutlet UILabel* locationLabel;
-//    IBOutlet UILabel* addressLabel;
     CLLocationManager* manager;
-    
 }
 
 @property (strong, nonatomic) RestaurantsController * restaurantsController;
 @property (strong, nonatomic) MKMapView * mapView;
+@property (strong, nonatomic) IBOutlet MKMapView* map;
+@property (strong, nonatomic) NSMutableDictionary *selectedRestaurant;
 
 -(void)geocodeRestaurant:(NSString*)address;
 -(void)setUpRestaurantPins;

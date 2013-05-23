@@ -44,8 +44,12 @@
 		683A460B17031B19009B427D /* 5StarsSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 683A45F717031B19009B427D /* 5StarsSmall.png */; };
 		683A460C17031B19009B427D /* 5StarsSmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 683A45F817031B19009B427D /* 5StarsSmall@2x.png */; };
 		684B2AFE16DD57CA00E213A7 /* Restaurant.m in Sources */ = {isa = PBXBuildFile; fileRef = 684B2AFD16DD57CA00E213A7 /* Restaurant.m */; };
+		6856E50E174518CF00D83209 /* MenuOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6856E50D174518CF00D83209 /* MenuOptionsViewController.m */; };
 		68570D8D17098DA4006A2476 /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 68570D8C17098DA4006A2476 /* CommentCell.m */; };
 		687841A01707320500CF29C6 /* MenusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6878419F1707320500CF29C6 /* MenusViewController.m */; };
+		6887657017464E640081BE73 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6887656F17464E640081BE73 /* logo@2x.png */; };
+		688765721746526F0081BE73 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 688765711746526F0081BE73 /* logo.png */; };
+		68876575174678520081BE73 /* MapPin.m in Sources */ = {isa = PBXBuildFile; fileRef = 68876574174678520081BE73 /* MapPin.m */; };
 		689356BE172AC86300D32F80 /* navbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 689356BC172AC86300D32F80 /* navbar.png */; };
 		689356BF172AC86300D32F80 /* navbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 689356BD172AC86300D32F80 /* navbar@2x.png */; };
 		689356C2172ACD9300D32F80 /* toolbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 689356C0172ACD9300D32F80 /* toolbar.png */; };
@@ -79,6 +83,11 @@
 		68CC3F76170456E3006B8345 /* RestaurantMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 68CC3F75170456E3006B8345 /* RestaurantMapViewController.m */; };
 		68CC3F79170459EC006B8345 /* RestaurantAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 68CC3F78170459EC006B8345 /* RestaurantAnnotation.m */; };
 		68D16F0417087A3B00D325DE /* CommentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 68D16F0317087A3B00D325DE /* CommentsViewController.m */; };
+		68D9EA37174A90FF005DEF30 /* cafesol.png in Resources */ = {isa = PBXBuildFile; fileRef = 68D9EA33174A90FD005DEF30 /* cafesol.png */; };
+		68D9EA38174A90FF005DEF30 /* goa.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 68D9EA34174A90FD005DEF30 /* goa.jpg */; };
+		68D9EA39174A90FF005DEF30 /* granville.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 68D9EA35174A90FE005DEF30 /* granville.jpg */; };
+		68D9EA3A174A90FF005DEF30 /* solbistro.png in Resources */ = {isa = PBXBuildFile; fileRef = 68D9EA36174A90FE005DEF30 /* solbistro.png */; };
+		68F3DC91174925C00097CE96 /* rinuccini.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 68F3DC90174925C00097CE96 /* rinuccini.jpg */; };
 		68F7E3FC170AF4170087051F /* BookingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 68F7E3FB170AF4170087051F /* BookingViewController.m */; };
 		68F7E3FE170B256E0087051F /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68F7E3FD170B256E0087051F /* MessageUI.framework */; };
 		68F7E400170B35570087051F /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 68F7E3FF170B35570087051F /* icon@2x.png */; };
@@ -133,10 +142,16 @@
 		683A45F817031B19009B427D /* 5StarsSmall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "5StarsSmall@2x.png"; sourceTree = "<group>"; };
 		684B2AFC16DD57CA00E213A7 /* Restaurant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Restaurant.h; path = ../Restaurant.h; sourceTree = "<group>"; };
 		684B2AFD16DD57CA00E213A7 /* Restaurant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Restaurant.m; path = ../Restaurant.m; sourceTree = "<group>"; };
+		6856E50C174518CF00D83209 /* MenuOptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuOptionsViewController.h; sourceTree = "<group>"; };
+		6856E50D174518CF00D83209 /* MenuOptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuOptionsViewController.m; sourceTree = "<group>"; };
 		68570D8B17098DA4006A2476 /* CommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommentCell.h; path = ../CommentCell.h; sourceTree = "<group>"; };
 		68570D8C17098DA4006A2476 /* CommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommentCell.m; path = ../CommentCell.m; sourceTree = "<group>"; };
 		6878419E1707320500CF29C6 /* MenusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenusViewController.h; sourceTree = "<group>"; };
 		6878419F1707320500CF29C6 /* MenusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenusViewController.m; sourceTree = "<group>"; };
+		6887656F17464E640081BE73 /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@2x.png"; sourceTree = "<group>"; };
+		688765711746526F0081BE73 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		68876573174678520081BE73 /* MapPin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapPin.h; sourceTree = "<group>"; };
+		68876574174678520081BE73 /* MapPin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapPin.m; sourceTree = "<group>"; };
 		689356BC172AC86300D32F80 /* navbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navbar.png; sourceTree = "<group>"; };
 		689356BD172AC86300D32F80 /* navbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navbar@2x.png"; sourceTree = "<group>"; };
 		689356C0172ACD9300D32F80 /* toolbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toolbar.png; sourceTree = "<group>"; };
@@ -181,6 +196,11 @@
 		68CC3F78170459EC006B8345 /* RestaurantAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RestaurantAnnotation.m; sourceTree = "<group>"; };
 		68D16F0217087A3B00D325DE /* CommentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentsViewController.h; sourceTree = "<group>"; };
 		68D16F0317087A3B00D325DE /* CommentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentsViewController.m; sourceTree = "<group>"; };
+		68D9EA33174A90FD005DEF30 /* cafesol.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cafesol.png; path = ../project/lookbookeat/app/assets/images/cafesol.png; sourceTree = "<group>"; };
+		68D9EA34174A90FD005DEF30 /* goa.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = goa.jpg; path = ../project/lookbookeat/app/assets/images/goa.jpg; sourceTree = "<group>"; };
+		68D9EA35174A90FE005DEF30 /* granville.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = granville.jpg; path = ../project/lookbookeat/app/assets/images/granville.jpg; sourceTree = "<group>"; };
+		68D9EA36174A90FE005DEF30 /* solbistro.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = solbistro.png; path = ../project/lookbookeat/app/assets/images/solbistro.png; sourceTree = "<group>"; };
+		68F3DC90174925C00097CE96 /* rinuccini.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = rinuccini.jpg; sourceTree = "<group>"; };
 		68F7E3FA170AF4170087051F /* BookingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookingViewController.h; sourceTree = "<group>"; };
 		68F7E3FB170AF4170087051F /* BookingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookingViewController.m; sourceTree = "<group>"; };
 		68F7E3FD170B256E0087051F /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -253,10 +273,10 @@
 		681EE3DB16CC2A6900F2AAF5 /* LookBookEat */ = {
 			isa = PBXGroup;
 			children = (
-				68A03E0916E7A5A30075C15F /* RestaurantsController.h */,
-				68A03E0A16E7A5A30075C15F /* RestaurantsController.m */,
 				68570D8B17098DA4006A2476 /* CommentCell.h */,
 				68570D8C17098DA4006A2476 /* CommentCell.m */,
+				68A03E0916E7A5A30075C15F /* RestaurantsController.h */,
+				68A03E0A16E7A5A30075C15F /* RestaurantsController.m */,
 				681EE3E416CC2A6900F2AAF5 /* AppDelegate.h */,
 				681EE3E516CC2A6900F2AAF5 /* AppDelegate.m */,
 				684B2AFC16DD57CA00E213A7 /* Restaurant.h */,
@@ -281,10 +301,17 @@
 		683A45E417031AF8009B427D /* images */ = {
 			isa = PBXGroup;
 			children = (
+				68D9EA33174A90FD005DEF30 /* cafesol.png */,
+				68D9EA34174A90FD005DEF30 /* goa.jpg */,
+				68D9EA35174A90FE005DEF30 /* granville.jpg */,
+				68D9EA36174A90FE005DEF30 /* solbistro.png */,
+				688765711746526F0081BE73 /* logo.png */,
+				6887656F17464E640081BE73 /* logo@2x.png */,
 				689F73351731AB2600F1DE85 /* test@2x.png */,
 				689F73311731A4FD00F1DE85 /* whiteStar.png */,
 				689F73321731A4FD00F1DE85 /* whiteStar@2x.png */,
 				68AE6E0B173150E600C31566 /* commentBubble.png */,
+				68F3DC90174925C00097CE96 /* rinuccini.jpg */,
 				68AE6E0C173150E600C31566 /* commentBubble@2x.png */,
 				683615A5173050D10071C66E /* veggie.png */,
 				683615A6173050D10071C66E /* veggie@2x.png */,
@@ -344,8 +371,12 @@
 				68CC3F75170456E3006B8345 /* RestaurantMapViewController.m */,
 				68C6A86017022D7D00C9CD65 /* ProfileViewController.h */,
 				68C6A86117022D7D00C9CD65 /* ProfileViewController.m */,
+				6856E50C174518CF00D83209 /* MenuOptionsViewController.h */,
+				6856E50D174518CF00D83209 /* MenuOptionsViewController.m */,
 				68C6A8561701FF7100C9CD65 /* NearbyViewController.h */,
 				68C6A8571701FF7100C9CD65 /* NearbyViewController.m */,
+				68876573174678520081BE73 /* MapPin.h */,
+				68876574174678520081BE73 /* MapPin.m */,
 				68C6A85D1702005A00C9CD65 /* NearbyAnnotation.h */,
 				68C6A85E1702005A00C9CD65 /* NearbyAnnotation.m */,
 				68C6A7EE1700975900C9CD65 /* SearchResultsViewController.h */,
@@ -466,6 +497,13 @@
 				689F73331731A4FD00F1DE85 /* whiteStar.png in Resources */,
 				689F73341731A4FD00F1DE85 /* whiteStar@2x.png in Resources */,
 				689F73361731AB2600F1DE85 /* test@2x.png in Resources */,
+				6887657017464E640081BE73 /* logo@2x.png in Resources */,
+				688765721746526F0081BE73 /* logo.png in Resources */,
+				68F3DC91174925C00097CE96 /* rinuccini.jpg in Resources */,
+				68D9EA37174A90FF005DEF30 /* cafesol.png in Resources */,
+				68D9EA38174A90FF005DEF30 /* goa.jpg in Resources */,
+				68D9EA39174A90FF005DEF30 /* granville.jpg in Resources */,
+				68D9EA3A174A90FF005DEF30 /* solbistro.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -498,6 +536,8 @@
 				68570D8D17098DA4006A2476 /* CommentCell.m in Sources */,
 				68F7E3FC170AF4170087051F /* BookingViewController.m in Sources */,
 				689F733017319DF800F1DE85 /* AddCommentsViewController.m in Sources */,
+				6856E50E174518CF00D83209 /* MenuOptionsViewController.m in Sources */,
+				68876575174678520081BE73 /* MapPin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

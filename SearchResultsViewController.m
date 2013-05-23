@@ -58,17 +58,24 @@
                               otherButtonTitles:nil];
         [alert show];
     }
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
--(void)viewDidAppear:(BOOL)animated
+
+
+- (void) viewDidAppear:(BOOL)animated
 {
-    [self.navigationController setToolbarHidden:YES];
+     [self.navigationController setToolbarHidden:YES];
+    //set up swipe gesture to previous view
+    UISwipeGestureRecognizer *oneFingerSwipeRight = [[UISwipeGestureRecognizer alloc]
+                                                     initWithTarget:self
+                                                     action:@selector(oneFingerSwipeRight:)];
+    [oneFingerSwipeRight setDirection:UISwipeGestureRecognizerDirectionRight];
+    [[self view] addGestureRecognizer:oneFingerSwipeRight];
+}
+
+//pop view from stack to return to previous view
+- (void)oneFingerSwipeRight:(UITapGestureRecognizer *)recognizer {
+    [[self navigationController] popViewControllerAnimated:YES];
 }
 
 -(void)back
@@ -126,15 +133,12 @@
 
     
     // load pic from server
-    NSString* baseURL = [[NSString alloc] initWithFormat:@"http://www.lookbookeat.com/images/"];
-    NSString *restaurantThumbPath = [[filteredResults valueForKey:@"picture"] objectAtIndex:indexPath.row];
-    NSString* picURL = [[NSString alloc] initWithFormat:@"%@%@", baseURL, restaurantThumbPath];
+    //NSString* baseURL = [[NSString alloc] initWithFormat:@"http://www.lookbookeat.com/images/"];
+    //NSString *restaurantThumbPath = [[filteredResults valueForKey:@"picture"] objectAtIndex:indexPath.row];
+    //NSString* picURL = [[NSString alloc] initWithFormat:@"%@%@", baseURL, restaurantThumbPath];
     NSString *restaurantName = [[filteredResults valueForKey:@"name"] objectAtIndex:indexPath.row];
     NSString *restaurantAddress = [[filteredResults valueForKey:@"address"] objectAtIndex:indexPath.row];
   
-    
-    
-    
     
     UILabel *nameLabel = (UILabel *)[cell viewWithTag:100];
     [nameLabel setFont:[UIFont fontWithName:@"Avenir" size:17.0]];
@@ -143,7 +147,8 @@
     [addressLabel setFont:[UIFont fontWithName:@"Avenir" size:13.0]];
 	addressLabel.text = restaurantAddress;
 	UIImageView * thumbView = (UIImageView *)[cell viewWithTag:102];
-    [thumbView setImageWithURL:[NSURL URLWithString:picURL] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
+    //[thumbView setImageWithURL:[NSURL URLWithString:picURL] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
+    [thumbView setImage:[UIImage imageNamed:[[filteredResults valueForKey:@"picture"] objectAtIndex:indexPath.row]]];
 
 	//thumbView.image = [self imageForRating:player.rating];
     

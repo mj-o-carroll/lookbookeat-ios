@@ -30,6 +30,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *threeStar;
 @property (strong, nonatomic) IBOutlet UIButton *twoStar;
 @property (strong, nonatomic) IBOutlet UIButton *oneStar;
+@property (nonatomic, weak) NSString *commentRating;
 
 
 
@@ -38,6 +39,8 @@
 - (IBAction)cancel:(id)sender;
 - (IBAction)done:(id)sender;
 - (void)starSelected:(id)sender;
+
+- (void)hideKeyboard;
 
 @end
 

@@ -13,6 +13,7 @@
 {
     UIPickerView *seatPicker;
     NSString *timeDate;
+    NSString *noOfSeats;
 }
 
 @property (strong, nonatomic) NSMutableDictionary *selectedRestaurant;

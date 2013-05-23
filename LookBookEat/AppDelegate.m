@@ -16,13 +16,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
-    //connect to restaurants JSON
-    
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
     //NSURL *url = [NSURL URLWithString:@"http://localhost:3000/restaurants.json"];
-    NSURL *url = [NSURL URLWithString:@"http://lookbookeat.com/restaurants.json"];
+    NSURL *url = [NSURL URLWithString:@"http://lookbookeat.herokuapp.com/restaurants.json"];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [[NSURLConnection alloc] initWithRequest:request delegate:self];
 
@@ -54,14 +51,16 @@
           nil]];
         //adjust vertical position of navigation bar text
         [[UINavigationBar appearance] setTitleVerticalPositionAdjustment:3 forBarMetrics:UIBarMetricsDefault];
-    //[[UILabel appearance] setFont:[UIFont fontWithName:@"Avenir" size:14.0]];
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"navbar.png"] forBarMetrics:UIBarMetricsDefault];
     [[UIToolbar appearance] setBackgroundImage:[UIImage imageNamed:@"toolbar.png"]forToolbarPosition:1
                                     barMetrics:UIBarMetricsDefault];
     //bar button text
-    [[UIBarButtonItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15], UITextAttributeFont,nil] forState:UIControlStateNormal];
+    [[UIBarButtonItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Avenir" size:15.0f], UITextAttributeFont,nil] forState:UIControlStateNormal];
+
     
-    //[[UIToolbar appearance] setBackgroundImage:[UIImage imageNamed:@"toolbar.png"] forBarMetrics:UIBarMetricsDefault];
+    
+    
+   
 }
 
 //THE FOLLOWING METHODS CONNECT AND PARSE RESTAURANTS JSON

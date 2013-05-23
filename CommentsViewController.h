@@ -21,6 +21,7 @@
 @property (strong, nonatomic) NSMutableArray *comments;
 @property (nonatomic, weak) IBOutlet UILabel *restaurantName;
 
+
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 - (UIImage *)imageForRating:(int)rating;
