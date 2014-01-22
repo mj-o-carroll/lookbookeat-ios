@@ -8,12 +8,9 @@
 
 #import "AddCommentsViewController.h"
 
-
 @implementation AddCommentsViewController
 
 @synthesize delegate, commentText, fiveStar, fourStar, twoStar, threeStar, oneStar, commentRating;
-
-
 
 - (void)viewDidLoad
 {
@@ -32,7 +29,6 @@
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     [self.view addGestureRecognizer:gestureRecognizer];
     gestureRecognizer.cancelsTouchesInView = NO;  // this prevents the gesture recognizers to 'block' touches
-
 }
 
 - (void) viewDidAppear:(BOOL)animated
@@ -43,19 +39,15 @@
                                                      action:@selector(oneFingerSwipeRight:)];
     [oneFingerSwipeRight setDirection:UISwipeGestureRecognizerDirectionRight];
     [[self view] addGestureRecognizer:oneFingerSwipeRight];
-    
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     [self.view addGestureRecognizer:gestureRecognizer];
     gestureRecognizer.cancelsTouchesInView = NO;  // this prevents the gesture recognizers to 'block' touches
-
 }
-
 
 - (void)hideKeyboard
 {
     [commentText resignFirstResponder];
 }
-
 
 //pop view from stack to return to previous view
 - (void)oneFingerSwipeRight:(UITapGestureRecognizer *)recognizer {
@@ -73,7 +65,6 @@
         [oneStar setImage:[UIImage imageNamed:@"1Star@2x.png"] forState:UIControlStateNormal];
         commentRating = @"5";
     }
-    
     else if ([sender tag] == 4)
     {
         [fiveStar setImage:[UIImage imageNamed:@"whiteStar.png"] forState:UIControlStateNormal];
@@ -83,7 +74,6 @@
         [oneStar setImage:[UIImage imageNamed:@"1Star@2x.png"] forState:UIControlStateNormal];
         commentRating = @"4";
     }
-    
     else if ([sender tag] == 3)
     {
         [fiveStar setImage:[UIImage imageNamed:@"whiteStar.png"] forState:UIControlStateNormal];
@@ -93,7 +83,6 @@
         [oneStar setImage:[UIImage imageNamed:@"1Star@2x.png"] forState:UIControlStateNormal];
         commentRating = @"3";
     }
-    
     else if ([sender tag] == 2)
     {
         [fiveStar setImage:[UIImage imageNamed:@"whiteStar.png"] forState:UIControlStateNormal];
@@ -103,7 +92,6 @@
         [oneStar setImage:[UIImage imageNamed:@"1Star@2x.png"] forState:UIControlStateNormal];
         commentRating = @"2";
     }
-    
     else if ([sender tag] == 1)
     {
         [fiveStar setImage:[UIImage imageNamed:@"whiteStar.png"] forState:UIControlStateNormal];
@@ -115,23 +103,17 @@
     }
 }
 
-
-
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-
-
-
-
 - (IBAction)cancel:(id)sender
 {
 	[self.delegate addCommentsViewControllerDidCancel:self];
 }
+
 - (IBAction)done:(id)sender
 {
 	[self.delegate addCommentsViewControllerDidSave:self];
