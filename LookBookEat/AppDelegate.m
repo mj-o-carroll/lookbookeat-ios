@@ -8,9 +8,7 @@
 
 #import "AppDelegate.h"
 
-
 @implementation AppDelegate
-
 
 @synthesize restaurantsController, window, restaurants, hvc, nvc;
 
@@ -56,11 +54,6 @@
                                     barMetrics:UIBarMetricsDefault];
     //bar button text
     [[UIBarButtonItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Avenir" size:15.0f], UITextAttributeFont,nil] forState:UIControlStateNormal];
-
-    
-    
-    
-   
 }
 
 //THE FOLLOWING METHODS CONNECT AND PARSE RESTAURANTS JSON
@@ -69,7 +62,6 @@
     data = [[NSMutableData alloc] init];    
 }
                    
-
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)theData
 {
         [data appendData:theData];
@@ -78,15 +70,11 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    
     restaurants = [NSJSONSerialization JSONObjectWithData:data options:nil error:nil];
-    
     hvc.restaurantsController.listOfRestaurants = restaurants;
 
     //NSNotification code
-    
     [[NSNotificationCenter defaultCenter] postNotificationName:@"JSONLoaded" object:self userInfo:restaurantsController];
-
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
@@ -96,7 +84,6 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 
-							
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
