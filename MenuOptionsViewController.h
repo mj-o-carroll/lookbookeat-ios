@@ -12,8 +12,6 @@
 @interface MenuOptionsViewController : UITableViewController
 {
     NSMutableData *menuData;
-    
-    
 }
 
 @property (strong, nonatomic) NSMutableDictionary *selectedRestaurant;
