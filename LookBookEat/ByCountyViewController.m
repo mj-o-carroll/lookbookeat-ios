@@ -19,8 +19,6 @@
 
 NSUInteger selectedIndex;
 
-
-
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -37,11 +35,9 @@ NSUInteger selectedIndex;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     // set background image
     UIImage *patternImage = [UIImage imageNamed:@"light_toast.png"];
     self.view.backgroundColor = [UIColor colorWithPatternImage:patternImage];
-    
     //set custom back button
     UIImage *buttonImage = [UIImage imageNamed:@"back_button.png"];
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -50,19 +46,13 @@ NSUInteger selectedIndex;
     [button addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *customBarItem = [[UIBarButtonItem alloc] initWithCustomView:button];
     self.navigationItem.leftBarButtonItem = customBarItem;
-    
     NSLog(@"Kablam, data has got to the bycounty controller!");
     NSLog(@"%@", [restaurantsController.listOfRestaurants objectAtIndex:0]);
-    
     selectedIndex = [[restaurantsController availableCounties] indexOfObject:self.county];
-  
 }
-
 
 - (void) viewDidAppear:(BOOL)animated
 {
-
-    
     //set up swipe gesture to previous view
     UISwipeGestureRecognizer *oneFingerSwipeRight = [[UISwipeGestureRecognizer alloc]
                                                      initWithTarget:self
@@ -76,7 +66,6 @@ NSUInteger selectedIndex;
     [[self navigationController] popViewControllerAnimated:YES];
 }
 
-
 -(void)back
 {
     [self.navigationController popViewControllerAnimated:YES];
@@ -89,7 +78,6 @@ NSUInteger selectedIndex;
 }
 
 #pragma mark - Table view data source
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
@@ -104,20 +92,16 @@ NSUInteger selectedIndex;
 {
     static NSString *CellIdentifier = @"CountyCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
     // Configure the cell...
-	NSString * possibleCounty = [[restaurantsController availableCounties] objectAtIndex:indexPath.row];
+    NSString * possibleCounty = [[restaurantsController availableCounties] objectAtIndex:indexPath.row];
     [cell.textLabel setFont:[UIFont fontWithName:@"Avenir" size:17.0]];
-	cell.textLabel.text = possibleCounty;
+    cell.textLabel.text = possibleCounty;
     if (indexPath.row == selectedIndex)
-		cell.accessoryType =
-        UITableViewCellAccessoryCheckmark;
-	else
-		cell.accessoryType = UITableViewCellAccessoryNone;
+      cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    else
+      cell.accessoryType = UITableViewCellAccessoryNone;
     return cell;
 }
-
-
 
 - (void)tableView:(UITableView *)tableView
 didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -131,13 +115,10 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 		cell.accessoryType = UITableViewCellAccessoryNone;
 	}
 	selectedIndex = indexPath.row;
-	UITableViewCell *cell =
-    [tableView cellForRowAtIndexPath:indexPath];
+	UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
 	cell.accessoryType = UITableViewCellAccessoryCheckmark;
 	NSString *theCounty = [[restaurantsController availableCounties] objectAtIndex:indexPath.row];
 	[self.delegate byCountyViewController:self didSelectCounty:theCounty];
 }
-
-
 
 @end
