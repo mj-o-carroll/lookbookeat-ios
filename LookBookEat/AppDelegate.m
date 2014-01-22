@@ -15,21 +15,17 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    
     //NSURL *url = [NSURL URLWithString:@"http://localhost:3000/restaurants.json"];
     NSURL *url = [NSURL URLWithString:@"http://lookbookeat.herokuapp.com/restaurants.json"];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [[NSURLConnection alloc] initWithRequest:request delegate:self];
-
     nvc = (UINavigationController*) self.window.rootViewController;
     hvc = [[nvc viewControllers] objectAtIndex:0];
     restaurantsController = [[RestaurantsController alloc] initWithArray:restaurants];
     hvc.restaurantsController = restaurantsController;
-    
     NSLog(@"Root: %@", self.window.rootViewController);
     NSLog(@"Testing");
     NSLog(@"List of current active view controllers:%@", self.window.rootViewController);
-    
     [self customizeAppearance];
     
     return YES;
@@ -49,11 +45,11 @@
           nil]];
         //adjust vertical position of navigation bar text
         [[UINavigationBar appearance] setTitleVerticalPositionAdjustment:3 forBarMetrics:UIBarMetricsDefault];
-    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"navbar.png"] forBarMetrics:UIBarMetricsDefault];
-    [[UIToolbar appearance] setBackgroundImage:[UIImage imageNamed:@"toolbar.png"]forToolbarPosition:1
+        [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"navbar.png"] forBarMetrics:UIBarMetricsDefault];
+        [[UIToolbar appearance] setBackgroundImage:[UIImage imageNamed:@"toolbar.png"]forToolbarPosition:1
                                     barMetrics:UIBarMetricsDefault];
-    //bar button text
-    [[UIBarButtonItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Avenir" size:15.0f], UITextAttributeFont,nil] forState:UIControlStateNormal];
+        //bar button text
+        [[UIBarButtonItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Avenir" size:15.0f], UITextAttributeFont,nil] forState:UIControlStateNormal];
 }
 
 //THE FOLLOWING METHODS CONNECT AND PARSE RESTAURANTS JSON
