@@ -68,7 +68,6 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     restaurants = [NSJSONSerialization JSONObjectWithData:data options:nil error:nil];
     hvc.restaurantsController.listOfRestaurants = restaurants;
-
     //NSNotification code
     [[NSNotificationCenter defaultCenter] postNotificationName:@"JSONLoaded" object:self userInfo:restaurantsController];
 }
