@@ -10,13 +10,10 @@
 #import "RestaurantsController.h"
 #import "HomeViewController.h"
 
-
 @class HomeViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>{
-    
     NSMutableData *data;
-
 }
 
 @property (strong, nonatomic) UIWindow *window;
@@ -24,7 +21,6 @@
 @property (strong, nonatomic) UINavigationController * nvc;
 @property (strong, nonatomic) HomeViewController * hvc;
 @property (strong, nonatomic) NSMutableArray *restaurants;
-
 
 - (void)customizeAppearance;
 
